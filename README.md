@@ -75,17 +75,69 @@ Compare the original modulating signal with the demodulated signal. PROCEDURE
 •	Verify the generated waveform using Tabulation and Model Waveform
 
 Program
+```
+// Parameters
+ac = 18.4;      // Carrier amplitude
+am = 9.2;      // Message amplitude
+fc = 5800;   // Carrier frequency (Hz)
+fm = 580;    // Message frequency (Hz)
+fs = 98000;  // Sampling frequency (Hz)
 
+// Time vector
+t = 0:1/fs:2/fm;
+
+// Message signal
+e1 = am * sin(2 * %pi * fm * t);
+
+// Carrier signal
+e2 = ac * sin(2 * %pi * fc * t);
+
+// AM modulated signal
+e3 = (ac + e1) .* sin(2 * %pi * fc * t);
+
+// Demodulated signal using Hilbert transform
+demod = abs(hilbert(e3)) - ac;
+
+// Plotting
+subplot(4,1,1);
+plot(t, e1);
+xlabel("Time (s)");
+ylabel("Amplitude");
+title("Message Signal");
+xgrid;
+subplot(4,1,2);
+plot(t, e2);
+xlabel("Time (s)");
+ylabel("Amplitude");
+title("Carrier Signal");
+xgrid;
+subplot(4,1,3);
+plot(t, e3);
+xlabel("Time (s)");
+ylabel("Amplitude");
+title("AM Signal");
+xgrid;
+subplot(4,1,4);
+plot(t, demod);
+xlabel("Time (s)");
+ylabel("Amplitude");
+title("Demodulated Signal");
+xgrid;
+
+```
 
 
 Output Waveform
 
+<img width="1920" height="1080" alt="am 1" src="https://github.com/user-attachments/assets/c538ec79-8ab6-4f61-97d4-c04115940276" />
 
 
 
 
 TABULATION:
+![WhatsApp Image 2025-11-11 at 10 48 54_427d7d5a](https://github.com/user-attachments/assets/0413b8d7-749d-40e3-9f6d-46f5b81d76be)
 
+![WhatsApp Image 2025-11-11 at 10 48 56_33693fb3](https://github.com/user-attachments/assets/1dbd8597-4e41-413f-93c7-7a9d5ba6c9e1)
 
 
 Calculation
